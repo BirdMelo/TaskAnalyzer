@@ -64,10 +64,16 @@ def validate_task(task: Dict[str, Any]) -> None:
 
     started_at = parse_datetime(task["started_at"], "started_at")
     completed_at = parse_datetime(task["completed_at"], "completed_at")
-    parse_datetime(task["due_date"], "due_date")
+    due_date = parse_datetime(task["due_date"], "due_date")
 
-    if started_at.tzinfo != completed_at.tzinfo:
-        message = "started_at e completed_at devem usar o mesmo fuso horário."
+    if (
+        started_at.tzinfo != completed_at.tzinfo
+        or started_at.tzinfo != due_date.tzinfo
+    ):
+        message = (
+            "started_at, completed_at e due_date devem usar o mesmo "
+            "fuso horário."
+        )
         LOGGER.error(message)
         raise ValueError(message)
 

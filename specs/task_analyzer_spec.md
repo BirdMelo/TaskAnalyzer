@@ -107,13 +107,20 @@ def calculate_productivity_metrics(
         priority_filter (Optional[str]): Filtro opcional por prioridade ("ALTA", "MEDIA", "BAIXA", "TODAS").
 
     Returns:
-        Dict[str, Any]: Dicionário com estatísticas globais (tempo médio, taxa de atraso,
-            taxa de refação e métricas agrupadas).
+        Dict[str, Any]: Dicionário com as chaves
+            ``average_completion_time`` (horas decimais), ``delay_rate`` e
+            ``rework_rate`` (percentuais de 0 a 100), além de ``by_priority``
+            com as mesmas métricas para ``ALTA``, ``MEDIA`` e ``BAIXA``.
 
     Raises:
         ValueError: Se a lista de tarefas contiver incoerência temporal (ex: started_at > completed_at)
-            ou formatos inválidos.
+            ou formatos inválidos, ou se ``priority_filter`` não for
+            ``TODAS``, ``None`` ou uma prioridade válida.
     """
-    # Lógica analítica em memória executada dentro do ambiente Anaconda 'task-analyzer'
-    pass
+    ...
 ```
+
+O parâmetro `priority_filter` aceita `TODAS`, `None`, `ALTA`, `MEDIA` ou
+`BAIXA`. Para uma lista vazia ou uma prioridade sem tarefas, as métricas
+numéricas retornam `0.0`, e `by_priority` mantém as três prioridades
+disponíveis.

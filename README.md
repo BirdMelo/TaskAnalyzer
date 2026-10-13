@@ -52,7 +52,8 @@ BootCampIII-TaskAnalyzer/
 - **Implementação 1 — Build e estrutura inicial:** concluída.
 - **Implementação 2 — Validações e utilitários:** concluída.
 - **Pipeline CI/CD:** configurado em `.github/workflows/ci.yml`.
-- **Implementação 3 — Métricas analíticas:** aguardando autorização.
+- **Implementação 3 — Métricas analíticas:** concluída na branch
+  `feature/implement-productivity-metrics`.
 
 Na segunda implementação, `task_analyzer.utils` passou a validar tarefas sem
 alterar os dados recebidos. A validação interrompe na primeira inconsistência e
@@ -64,7 +65,13 @@ Os testes unitários podem ser executados com:
 
 ```bash
 pytest tests/test_utils.py
+pytest tests/test_core.py
 ```
+
+As métricas analíticas retornam `average_completion_time` em horas decimais,
+`delay_rate` e `rework_rate` como percentuais de 0 a 100, além de métricas
+equivalentes em `by_priority` para `ALTA`, `MEDIA` e `BAIXA`. O filtro
+`priority_filter` aceita `TODAS`, `None` ou uma prioridade específica.
 
 ## Pipeline CI/CD
 
@@ -81,8 +88,9 @@ As etapas serão executadas individualmente, mediante autorização:
 
 1. **Build e estrutura inicial:** concluída.
 2. **Validações e utilitários:** concluída.
-3. **Métricas analíticas:** implementar o contrato de
-   `calculate_productivity_metrics` e testes unitários.
+3. **Métricas analíticas:** concluída; contrato de
+   `calculate_productivity_metrics` implementado e coberto por testes
+   unitários.
 4. **Integração:** adicionar cenários de integração sem persistência em disco.
 5. **Pipeline:** concluído; GitHub Actions configurado com Conda, Pytest e
    verificação de sintaxe.
