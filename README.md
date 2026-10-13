@@ -38,7 +38,7 @@ A configuração do projeto utiliza o layout `src/`, portanto o pacote
 
 ```text
 BootCampIII-TaskAnalyzer/
-├── .github/workflows/       # Pipeline CI/CD (implementação planejada)
+├── .github/workflows/       # Pipeline CI/CD
 ├── environment.yml          # Ambiente Conda reproduzível
 ├── specs/                   # Especificação técnica
 ├── src/task_analyzer/       # Pacote principal
@@ -47,18 +47,45 @@ BootCampIII-TaskAnalyzer/
 └── tests/                   # Testes automatizados
 ```
 
+## Status da implementação
+
+- **Implementação 1 — Build e estrutura inicial:** concluída.
+- **Implementação 2 — Validações e utilitários:** concluída.
+- **Pipeline CI/CD:** configurado em `.github/workflows/ci.yml`.
+- **Implementação 3 — Métricas analíticas:** aguardando autorização.
+
+Na segunda implementação, `task_analyzer.utils` passou a validar tarefas sem
+alterar os dados recebidos. A validação interrompe na primeira inconsistência e
+lança `ValueError` com uma mensagem contextualizada. São verificados os campos
+obrigatórios, datas ISO 8601, coerência entre início e conclusão, prioridades e
+contagem de retrabalho.
+
+Os testes unitários podem ser executados com:
+
+```bash
+pytest tests/test_utils.py
+```
+
+## Pipeline CI/CD
+
+O workflow `.github/workflows/ci.yml` é executado em `push` e
+`pull_request` direcionados às branches `main` e `master`. Ele:
+
+1. Configura o ambiente Conda definido em `environment.yml`.
+2. Executa toda a suíte com `python -m pytest`.
+3. Verifica a sintaxe Python em `src/` e `tests/` com `compileall`.
+
 ## Plano de implementação
 
 As etapas serão executadas individualmente, mediante autorização:
 
-1. **Build e estrutura inicial:** concluída nesta etapa.
-2. **Validações e utilitários:** implementar validação tipada de tarefas e
-   respectivos testes unitários.
+1. **Build e estrutura inicial:** concluída.
+2. **Validações e utilitários:** concluída.
 3. **Métricas analíticas:** implementar o contrato de
    `calculate_productivity_metrics` e testes unitários.
 4. **Integração:** adicionar cenários de integração sem persistência em disco.
-5. **Pipeline:** configurar GitHub Actions com Conda, Pytest e verificações de
-   qualidade.
+5. **Pipeline:** concluído; GitHub Actions configurado com Conda, Pytest e
+   verificação de sintaxe.
 6. **Documentação e revisão final:** consolidar uso, cobertura e critérios de
    aceitação.
 
