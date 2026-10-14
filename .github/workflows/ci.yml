@@ -37,3 +37,15 @@ jobs:
       - name: Check Python syntax
         shell: bash -el {0}
         run: python -m compileall -q src tests
+
+      - name: Build package
+        shell: bash -el {0}
+        run: python -m build
+
+      - name: Check package import
+        shell: bash -el {0}
+        run: python -c "import task_analyzer; assert task_analyzer.__version__ == '0.5.0'"
+
+      - name: Run Pylint
+        shell: bash -el {0}
+        run: python -m pylint src tests --fail-under=8.0

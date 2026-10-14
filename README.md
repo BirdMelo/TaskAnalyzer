@@ -56,6 +56,8 @@ BootCampIII-TaskAnalyzer/
   `feature/implement-productivity-metrics`.
 - **Implementação 4 — Testes de integração:** concluída na branch
   `feature/implement-integration-tests`.
+- **Implementação 5 — Pipeline CI/CD completo:** concluída na branch
+  `feature/complete-ci-pipeline`.
 
 Na segunda implementação, `task_analyzer.utils` passou a validar tarefas sem
 alterar os dados recebidos. A validação interrompe na primeira inconsistência e
@@ -88,6 +90,9 @@ O workflow `.github/workflows/ci.yml` é executado em `push` e
 1. Configura o ambiente Conda definido em `environment.yml`.
 2. Executa toda a suíte com `python -m pytest`.
 3. Verifica a sintaxe Python em `src/` e `tests/` com `compileall`.
+4. Constrói os artefatos do pacote com `python -m build`.
+5. Confirma a importação do pacote e a versão `0.5.0`.
+6. Executa Pylint com nota mínima `8.0`.
 
 ## Plano de implementação
 
@@ -100,8 +105,8 @@ As etapas serão executadas individualmente, mediante autorização:
    unitários.
 4. **Integração:** concluída; fluxo completo coberto por testes de integração
    sem persistência em disco.
-5. **Pipeline:** concluído; GitHub Actions configurado com Conda, Pytest e
-   verificação de sintaxe.
+5. **Pipeline:** concluído; GitHub Actions configurado com Conda, Pytest,
+   verificação de sintaxe, build, importação e Pylint.
 6. **Documentação e revisão final:** consolidar uso, cobertura e critérios de
    aceitação.
 

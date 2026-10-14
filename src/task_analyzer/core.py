@@ -1,7 +1,6 @@
 """Métricas analíticas do TaskAnalyzer."""
 
 import logging
-from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from task_analyzer.utils import ALLOWED_PRIORITIES, parse_datetime, validate_tasks
