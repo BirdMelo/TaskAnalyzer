@@ -53,9 +53,15 @@ BootCampIII-TaskAnalyzer/
 │       └── ci.yml             # Pipeline CI/CD (GitHub Actions com setup-miniconda e Pytest)
 ├── .gitignore                 # Exclusão de .vscode/, __pycache__, .pytest_cache e ambientes locais
 ├── README.md                  # Visão geral do projeto e instruções de execução
-├── CONTEXT_RULES.md           # Arquivo de regras persistentes para IA (v3.1.0)
+├── CONTEXT_RULES.md           # Arquivo de regras persistentes para IA (v3.2.0)
 ├── environment.yml            # Ambiente Conda (Python 3.11, Pytest, build e Pylint)
 ├── pyproject.toml             # Configuração de build, Pytest e Pylint
+├── docs/
+│   └── evidence/              # Evidências visuais da execução dos testes
+│       ├── tests_harness.png
+│       ├── tests_integracao.png
+│       ├── tests_unitario_metricas.png
+│       └── tests_unitario_validacoes.png
 ├── specs/
 │   ├── action_plan.md         # Plano de implementação e governança
 │   └── task_analyzer_spec.md  # Especificação SDD (v4.1.0)
@@ -63,7 +69,7 @@ BootCampIII-TaskAnalyzer/
 │   ├── integration/
 │   │   └── test_task_analyzer.py # Testes de integração
 │   ├── test_core.py            # Testes das métricas
-│   ├── test_harness.py         # Harness fornecido
+│   ├── test_harness.py         # Cenários avaliativos e casos de borda
 │   └── test_utils.py           # Testes das validações
 └── src/
     └── task_analyzer/         # Código-fonte principal do pacote
@@ -86,7 +92,11 @@ BootCampIII-TaskAnalyzer/
 ### **5.2 Proibições Explícitas**
 
 1. **Proibido o uso de dependências externas não homologadas:** Permitidos apenas a biblioteca padrão do Python e os pacotes declarados no `environment.yml`.
-2. **Proibido alterar cenários de teste:** O arquivo `tests/test_harness.py` é congelado para avaliação.
+2. **Alteração controlada de cenários de teste:** O arquivo
+   `tests/test_harness.py` deve preservar os cenários avaliativos definidos.
+   Alterações, ampliações ou adaptações exigem autorização prévia e devem ser
+   registradas no plano de ação. Nesta versão, o preenchimento dos cenários e
+   casos de borda foi autorizado para atender aos critérios avaliativos.
 3. **Proibida a persistência em disco ou DB:** Toda a execução opera exclusivamente em memória RAM.
 4. **Proibido alterar a assinatura pública:** Nomes de funções e tipos de parâmetros em `core.py` devem manter estrita retrocompatibilidade.
 5. **Proibida a inclusão de configurações locais de IDE:** `.vscode/` deve permanecer no `.gitignore`.

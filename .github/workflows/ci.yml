@@ -48,7 +48,7 @@ jobs:
 
       - name: Check package import
         shell: bash -el {0}
-        run: python -c "import task_analyzer; assert task_analyzer.__version__ == '0.6.0'"
+        run: python -c "import task_analyzer; assert task_analyzer.__version__ == '0.7.0'"
 
       - name: Run Pylint
         shell: bash -el {0}

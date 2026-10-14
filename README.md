@@ -39,6 +39,11 @@ A configuração do projeto utiliza o layout `src/`, portanto o pacote
 ```text
 BootCampIII-TaskAnalyzer/
 ├── .github/workflows/       # Pipeline CI/CD
+├── docs/evidence/           # Evidências visuais da execução dos testes
+│   ├── tests_harness.png
+│   ├── tests_integracao.png
+│   ├── tests_unitario_metricas.png
+│   └── tests_unitario_validacoes.png
 ├── environment.yml          # Ambiente Conda e ferramentas de qualidade
 ├── pyproject.toml           # Build, Pytest e Pylint
 ├── specs/                   # Especificações e plano de ação
@@ -46,6 +51,11 @@ BootCampIII-TaskAnalyzer/
 │   ├── core.py              # Métricas analíticas
 │   └── utils.py             # Validações e auxiliares
 └── tests/                   # Testes unitários e de integração
+    ├── integration/
+    │   └── test_task_analyzer.py # Testes de integração
+    ├── test_core.py          # Testes das métricas
+    ├── test_harness.py       # Cenários avaliativos e casos de borda
+    └── test_utils.py         # Testes das validações
 ```
 
 ## Status da implementação
@@ -61,6 +71,8 @@ BootCampIII-TaskAnalyzer/
   `feature/complete-ci-pipeline`.
 - **Implementação 6 — Documentação e revisão final:** concluída na branch
   `docs/finalize-documentation`.
+- **Implementação 7 — Conformidade dos requisitos avaliativos:** concluída na
+  branch `audit/evaluation-requirements`.
 
 Na segunda implementação, `task_analyzer.utils` passou a validar tarefas sem
 alterar os dados recebidos. A validação interrompe na primeira inconsistência e
@@ -91,6 +103,38 @@ Os testes de integração validam o fluxo completo entre entrada, validação,
 cálculo das métricas, filtros de prioridade, entradas inválidas e conjunto
 vazio.
 
+## Evidências de execução dos testes
+
+As imagens abaixo registram a execução local dos testes com Python 3.11.17
+e Pytest. Os arquivos estão versionados em
+[`docs/evidence/`](docs/evidence/).
+
+### Harness avaliativo
+
+Os dois cenários avaliativos e os casos de borda foram aprovados:
+
+![Testes do harness avaliativo](docs/evidence/tests_harness.png)
+
+### Testes de integração
+
+O fluxo completo de entrada, validação e cálculo das métricas foi aprovado:
+
+![Testes de integração](docs/evidence/tests_integracao.png)
+
+### Testes unitários das métricas
+
+Os cálculos globais, agrupamentos, filtros e validações de métricas foram
+aprovados:
+
+![Testes unitários das métricas](docs/evidence/tests_unitario_metricas.png)
+
+### Testes unitários das validações
+
+As validações de datas, campos obrigatórios, prioridades e retrabalho foram
+aprovadas:
+
+![Testes unitários das validações](docs/evidence/tests_unitario_validacoes.png)
+
 ## Build, importação e qualidade
 
 Com o ambiente `task-analyzer` ativado:
@@ -102,7 +146,7 @@ python -c "import task_analyzer; print(task_analyzer.__version__)"
 python -m pylint src tests --fail-under=8.0
 ```
 
-A versão atual do pacote é `0.6.0`. Os comandos de build geram artefatos em
+A versão atual do pacote é `0.7.0`. Os comandos de build geram artefatos em
 `build/` e `dist/`, que são ignorados pelo Git.
 
 ## Pipeline CI/CD
@@ -114,7 +158,7 @@ O workflow `.github/workflows/ci.yml` é executado em `push` e
 2. Executa toda a suíte com `python -m pytest`.
 3. Verifica a sintaxe Python em `src/` e `tests/` com `compileall`.
 4. Constrói os artefatos do pacote com `python -m build`.
-5. Confirma a importação do pacote e a versão `0.5.0`.
+5. Confirma a importação do pacote e a versão `0.7.0`.
 6. Executa Pylint com nota mínima `8.0`.
 
 ## Plano de implementação
@@ -132,5 +176,7 @@ As etapas serão executadas individualmente, mediante autorização:
    verificação de sintaxe, build, importação e Pylint.
 6. **Documentação e revisão final:** concluída; documentação, contrato,
    comandos de reprodução e critérios de aceitação revisados.
+7. **Conformidade dos requisitos avaliativos:** concluída; harness avaliativo,
+   documentação da estrutura e verificação dos critérios.
 
 Nenhuma etapa posterior altera o contrato público sem autorização explícita.

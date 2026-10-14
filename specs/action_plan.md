@@ -209,6 +209,31 @@ dados de tarefas.
 - Criada a branch `docs/finalize-documentation`.
 - Nenhum arquivo foi deletado.
 
+### 7. Conformidade dos requisitos avaliativos — concluída
+
+**Objetivo:** verificar e alinhar a estrutura, a documentação, os testes e o
+pipeline aos critérios avaliativos da atividade.
+
+**Implementações realizadas nesta etapa:**
+
+- Criada a branch `audit/evaluation-requirements`.
+- Preenchido `tests/test_harness.py` com os cenários avaliativos 1 e 2,
+  incluindo entrada vazia, tarefa inválida e filtro inválido.
+- A alteração do harness foi autorizada explicitamente pelo responsável,
+  constituindo exceção à regra de congelamento do arquivo.
+- Corrigida no `README.md` a referência de versão do pipeline para `0.7.0`.
+- Alinhadas as árvores de arquivos de `README.md` e `CONTEXT_RULES.md`.
+- Atualizada a versão do pacote para `0.7.0`.
+- Atualizado o status da implementação no `README.md` e neste plano.
+- Nenhum arquivo foi removido.
+
+**Observação sobre critérios externos ao código:**
+
+- A existência de um pull request revisado depende dos registros de revisão
+  disponíveis no GitHub e deve ser confirmada no próprio pull request.
+- A evidência de aprovação deve ser obtida pela execução local e pelo workflow
+  do GitHub Actions; não serão adicionados prints artificiais ao repositório.
+
 ## Critérios de conclusão
 
 O projeto será considerado concluído quando:

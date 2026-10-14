@@ -1,7 +1,7 @@
 # **Regras de Contexto e Governança de IA (CONTEXT_RULES)**
 
 **Documento:** Regras de Contexto e Governança de IA  
-**Versão:** 3.1.0 (Atualizado para Módulo Nativo `src/task_analyzer`, Portabilidade e Validação via Pytest)  
+**Versão:** 3.2.0 (Atualizado para conformidade dos requisitos avaliativos)
 
 ---
 
@@ -43,7 +43,7 @@ Este documento estabelece a **Versão 3.1.0 das Regras de Contexto e Governança
 Fica terminantemente proibido para a Inteligência Artificial e para o desenvolvedor durante a geração e manutenção do código:
 
 1. **Uso de Bibliotecas Externas Não Autorizadas em Runtime:** Permitido apenas o uso das bibliotecas homologadas no ambiente `task-analyzer` do Conda e a Biblioteca Padrão (*Standard Library*) do Python em tempo de execução. O uso de `pytest` é restrito à suíte de testes e automação CI/CD.
-2. **Alteração de Cenários de Teste Fornecidos:** Proibido modificar, desativar, ignorar ou adaptar a suíte de testes em `tests/test_harness.py` sem autorização prévia.
+2. **Alteração de Cenários de Teste Fornecidos:** Proibido modificar, desativar, ignorar ou adaptar a suíte de testes em `tests/test_harness.py` sem autorização prévia. Nesta implementação, o preenchimento do harness foi autorizado explicitamente para atender aos critérios avaliativos.
 3. **Alteração da Estrutura Padrão de Diretórios:** A árvore do repositório deve seguir rigorosamente a estrutura definida na Seção 5.
 4. **Persistência de Dados em Disco ou Banco de Dados:** O processamento é 100% em memória (*In-Memory*). Proibida a gravação de arquivos temporários (JSON, CSV, SQLite) em disco ou conexões externas.
 5. **Alteração da Assinatura de Funções Públicas:** Proibido renomear métodos públicos ou alterar a ordem e tipo dos parâmetros expostos no contrato analítico.
@@ -61,12 +61,23 @@ BootCampIII-TaskAnalyzer/
 │       └── ci.yml             # Pipeline CI/CD (GitHub Actions com setup-miniconda e Pytest)
 ├── .gitignore                 # Exclusão de .vscode/, __pycache__, .pytest_cache e ambientes locais
 ├── README.md                  # Instruções de reprodução (Conda + Pytest)
-├── CONTEXT_RULES.md           # Regras de governança de IA e contexto (v3.1.0)
+├── CONTEXT_RULES.md           # Regras de governança de IA e contexto (v3.2.0)
 ├── environment.yml            # Definição de ambiente Conda (Python 3.11 + Pytest)
+├── docs/
+│   └── evidence/              # Evidências visuais da execução dos testes
+│       ├── tests_harness.png
+│       ├── tests_integracao.png
+│       ├── tests_unitario_metricas.png
+│       └── tests_unitario_validacoes.png
 ├── specs/
+│   ├── action_plan.md         # Plano de implementação e governança
 │   └── task_analyzer_spec.md  # Especificação Técnica SDD (v4.1.0)
 ├── tests/
-│   └── test_harness.py        # Suíte de testes automatizados via Pytest
+│   ├── integration/
+│   │   └── test_task_analyzer.py # Testes de integração
+│   ├── test_core.py            # Testes das métricas
+│   ├── test_harness.py         # Cenários avaliativos e casos de borda
+│   └── test_utils.py           # Testes das validações
 └── src/
     └── task_analyzer/         # Pacote principal com a lógica analítica em memória
         ├── __init__.py
