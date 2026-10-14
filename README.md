@@ -39,12 +39,13 @@ A configuração do projeto utiliza o layout `src/`, portanto o pacote
 ```text
 BootCampIII-TaskAnalyzer/
 ├── .github/workflows/       # Pipeline CI/CD
-├── environment.yml          # Ambiente Conda reproduzível
-├── specs/                   # Especificação técnica
+├── environment.yml          # Ambiente Conda e ferramentas de qualidade
+├── pyproject.toml           # Build, Pytest e Pylint
+├── specs/                   # Especificações e plano de ação
 ├── src/task_analyzer/       # Pacote principal
 │   ├── core.py              # Métricas analíticas
 │   └── utils.py             # Validações e auxiliares
-└── tests/                   # Testes automatizados
+└── tests/                   # Testes unitários e de integração
 ```
 
 ## Status da implementação
@@ -58,6 +59,8 @@ BootCampIII-TaskAnalyzer/
   `feature/implement-integration-tests`.
 - **Implementação 5 — Pipeline CI/CD completo:** concluída na branch
   `feature/complete-ci-pipeline`.
+- **Implementação 6 — Documentação e revisão final:** concluída na branch
+  `docs/finalize-documentation`.
 
 Na segunda implementação, `task_analyzer.utils` passou a validar tarefas sem
 alterar os dados recebidos. A validação interrompe na primeira inconsistência e
@@ -73,6 +76,12 @@ pytest tests/test_core.py
 pytest tests/integration/test_task_analyzer.py
 ```
 
+Para executar toda a suíte:
+
+```bash
+python -m pytest
+```
+
 As métricas analíticas retornam `average_completion_time` em horas decimais,
 `delay_rate` e `rework_rate` como percentuais de 0 a 100, além de métricas
 equivalentes em `by_priority` para `ALTA`, `MEDIA` e `BAIXA`. O filtro
@@ -81,6 +90,20 @@ equivalentes em `by_priority` para `ALTA`, `MEDIA` e `BAIXA`. O filtro
 Os testes de integração validam o fluxo completo entre entrada, validação,
 cálculo das métricas, filtros de prioridade, entradas inválidas e conjunto
 vazio.
+
+## Build, importação e qualidade
+
+Com o ambiente `task-analyzer` ativado:
+
+```bash
+python -m build
+python -m pip install --force-reinstall dist/*.whl
+python -c "import task_analyzer; print(task_analyzer.__version__)"
+python -m pylint src tests --fail-under=8.0
+```
+
+A versão atual do pacote é `0.6.0`. Os comandos de build geram artefatos em
+`build/` e `dist/`, que são ignorados pelo Git.
 
 ## Pipeline CI/CD
 
@@ -107,7 +130,7 @@ As etapas serão executadas individualmente, mediante autorização:
    sem persistência em disco.
 5. **Pipeline:** concluído; GitHub Actions configurado com Conda, Pytest,
    verificação de sintaxe, build, importação e Pylint.
-6. **Documentação e revisão final:** consolidar uso, cobertura e critérios de
-   aceitação.
+6. **Documentação e revisão final:** concluída; documentação, contrato,
+   comandos de reprodução e critérios de aceitação revisados.
 
 Nenhuma etapa posterior altera o contrato público sem autorização explícita.
