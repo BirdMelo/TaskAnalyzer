@@ -1,5 +1,7 @@
 """Testes de integração do fluxo completo do TaskAnalyzer."""
 
+# Os dados repetidos representam fixtures independentes dos testes unitários.
+# pylint: disable=duplicate-code
 import pytest
 
 from task_analyzer.core import calculate_productivity_metrics

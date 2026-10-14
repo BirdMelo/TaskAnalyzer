@@ -4,5 +4,7 @@ __pycache__
 .vscode
 .pytest_cache
 *.egg-info/
+build/
+dist/
 specs/action_plan.md
 *.egg-info/
