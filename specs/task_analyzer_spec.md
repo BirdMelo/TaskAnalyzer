@@ -54,11 +54,17 @@ BootCampIII-TaskAnalyzer/
 ├── .gitignore                 # Exclusão de .vscode/, __pycache__, .pytest_cache e ambientes locais
 ├── README.md                  # Visão geral do projeto e instruções de execução
 ├── CONTEXT_RULES.md           # Arquivo de regras persistentes para IA (v3.1.0)
-├── environment.yml            # Definição do ambiente Conda (Python 3.11 + Pytest)
+├── environment.yml            # Ambiente Conda (Python 3.11, Pytest, build e Pylint)
+├── pyproject.toml             # Configuração de build, Pytest e Pylint
 ├── specs/
+│   ├── action_plan.md         # Plano de implementação e governança
 │   └── task_analyzer_spec.md  # Especificação SDD (v4.1.0)
 ├── tests/
-│   └── test_harness.py        # Suíte de testes automatizados via Pytest
+│   ├── integration/
+│   │   └── test_task_analyzer.py # Testes de integração
+│   ├── test_core.py            # Testes das métricas
+│   ├── test_harness.py         # Harness fornecido
+│   └── test_utils.py           # Testes das validações
 └── src/
     └── task_analyzer/         # Código-fonte principal do pacote
         ├── __init__.py
