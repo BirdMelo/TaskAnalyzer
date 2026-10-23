@@ -39,11 +39,15 @@ A configuração do projeto utiliza o layout `src/`, portanto o pacote
 ```text
 BootCampIII-TaskAnalyzer/
 ├── .github/workflows/       # Pipeline CI/CD
+├── Dockerfile               # Imagem Docker com ambiente Conda isolado
+├── .dockerignore             # Exclusões do contexto de build Docker
 ├── docs/evidence/           # Evidências visuais da execução dos testes
 │   ├── tests_harness.png
 │   ├── tests_integracao.png
 │   ├── tests_unitario_metricas.png
 │   └── tests_unitario_validacoes.png
+├── docs/governance_report.md # Fonte do relatório de governança de IA
+├── docs/governance_report.pdf # Relatório de governança de IA
 ├── environment.yml          # Ambiente Conda e ferramentas de qualidade
 ├── pyproject.toml           # Build, Pytest e Pylint
 ├── specs/                   # Especificações e plano de ação
@@ -73,6 +77,8 @@ BootCampIII-TaskAnalyzer/
   `docs/finalize-documentation`.
 - **Implementação 7 — Conformidade dos requisitos avaliativos:** concluída na
   branch `audit/evaluation-requirements`.
+- **Implementação 8 — Pipeline, Docker e governança de IA:** em andamento na
+  branch `feature/containerization-governance-pipeline`.
 
 Na segunda implementação, `task_analyzer.utils` passou a validar tarefas sem
 alterar os dados recebidos. A validação interrompe na primeira inconsistência e
@@ -102,6 +108,25 @@ equivalentes em `by_priority` para `ALTA`, `MEDIA` e `BAIXA`. O filtro
 Os testes de integração validam o fluxo completo entre entrada, validação,
 cálculo das métricas, filtros de prioridade, entradas inválidas e conjunto
 vazio.
+
+## Containerização Docker
+
+A execução isolada utiliza a imagem oficial `continuumio/miniconda3` e cria o
+ambiente Conda definido em `environment.yml`:
+
+```bash
+docker build -t task-analyzer:0.8.0 .
+docker run --rm task-analyzer:0.8.0
+```
+
+O comando `docker run` executa toda a suíte Pytest dentro do container.
+
+## Governança de IA
+
+As regras de governança estão descritas em
+[`CONTEXT_RULES.md`](CONTEXT_RULES.md). O relatório desta implementação está
+disponível em [Markdown](docs/governance_report.md) e em
+[PDF](docs/governance_report.pdf).
 
 ## Evidências de execução dos testes
 
@@ -146,7 +171,7 @@ python -c "import task_analyzer; print(task_analyzer.__version__)"
 python -m pylint src tests --fail-under=8.0
 ```
 
-A versão atual do pacote é `0.7.0`. Os comandos de build geram artefatos em
+A versão atual do pacote é `0.8.0`. Os comandos de build geram artefatos em
 `build/` e `dist/`, que são ignorados pelo Git.
 
 ## Pipeline CI/CD
@@ -158,8 +183,10 @@ O workflow `.github/workflows/ci.yml` é executado em `push` e
 2. Executa toda a suíte com `python -m pytest`.
 3. Verifica a sintaxe Python em `src/` e `tests/` com `compileall`.
 4. Constrói os artefatos do pacote com `python -m build`.
-5. Confirma a importação do pacote e a versão `0.7.0`.
+5. Confirma a importação do pacote e a versão `0.8.0`.
 6. Executa Pylint com nota mínima `8.0`.
+7. Constrói a imagem Docker.
+8. Executa a suíte de testes dentro do container.
 
 ## Plano de implementação
 
@@ -178,5 +205,7 @@ As etapas serão executadas individualmente, mediante autorização:
    comandos de reprodução e critérios de aceitação revisados.
 7. **Conformidade dos requisitos avaliativos:** concluída; harness avaliativo,
    documentação da estrutura e verificação dos critérios.
+8. **Pipeline, Docker e governança de IA:** em andamento; revisão do pipeline,
+   containerização isolada, relatório de governança e alinhamento documental.
 
 Nenhuma etapa posterior altera o contrato público sem autorização explícita.

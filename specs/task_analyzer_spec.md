@@ -53,15 +53,19 @@ BootCampIII-TaskAnalyzer/
 │       └── ci.yml             # Pipeline CI/CD (GitHub Actions com setup-miniconda e Pytest)
 ├── .gitignore                 # Exclusão de .vscode/, __pycache__, .pytest_cache e ambientes locais
 ├── README.md                  # Visão geral do projeto e instruções de execução
-├── CONTEXT_RULES.md           # Arquivo de regras persistentes para IA (v3.2.0)
+├── CONTEXT_RULES.md           # Arquivo de regras persistentes para IA (v3.3.0)
+├── Dockerfile                 # Imagem Docker com ambiente Conda isolado
+├── .dockerignore              # Exclusões do contexto de build Docker
 ├── environment.yml            # Ambiente Conda (Python 3.11, Pytest, build e Pylint)
 ├── pyproject.toml             # Configuração de build, Pytest e Pylint
 ├── docs/
-│   └── evidence/              # Evidências visuais da execução dos testes
-│       ├── tests_harness.png
-│       ├── tests_integracao.png
-│       ├── tests_unitario_metricas.png
-│       └── tests_unitario_validacoes.png
+│   ├── evidence/              # Evidências visuais da execução dos testes
+│   │   ├── tests_harness.png
+│   │   ├── tests_integracao.png
+│   │   ├── tests_unitario_metricas.png
+│   │   └── tests_unitario_validacoes.png
+│   ├── governance_report.md   # Fonte do relatório de governança de IA
+│   └── governance_report.pdf  # Relatório de governança de IA
 ├── specs/
 │   ├── action_plan.md         # Plano de implementação e governança
 │   └── task_analyzer_spec.md  # Especificação SDD (v4.1.0)
