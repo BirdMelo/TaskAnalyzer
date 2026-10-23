@@ -1,7 +1,7 @@
 # **Regras de Contexto e Governança de IA (CONTEXT_RULES)**
 
 **Documento:** Regras de Contexto e Governança de IA  
-**Versão:** 3.2.0 (Atualizado para conformidade dos requisitos avaliativos)
+**Versão:** 3.3.0 (Atualizado para pipeline, Docker e governança de IA)
 
 ---
 
@@ -20,7 +20,7 @@
 
 ## **2. Objetivos e Finalidade das Regras Persistentes**
 
-Este documento estabelece a **Versão 3.1.0 das Regras de Contexto e Governança de IA** atreladas ao repositório do projeto **TaskAnalyzer**. Ele serve como instrução permanente (*system prompt / context instructions*) para agentes e modelos de inteligência artificial encarregados de gerar, refatorar, testar e revisar o código do projeto, garantindo conformidade com o ecossistema **Anaconda/Conda**, portabilidade entre ambientes de execução e execução automatizada via **Pytest**.
+Este documento estabelece a **Versão 3.3.0 das Regras de Contexto e Governança de IA** atreladas ao repositório do projeto **TaskAnalyzer**. Ele serve como instrução permanente (*system prompt / context instructions*) para agentes e modelos de inteligência artificial encarregados de gerar, refatorar, testar e revisar o código do projeto, garantindo conformidade com o ecossistema **Anaconda/Conda**, Docker, portabilidade entre ambientes de execução e execução automatizada via **Pytest**.
 
 ---
 
@@ -35,6 +35,9 @@ Este documento estabelece a **Versão 3.1.0 das Regras de Contexto e Governança
 - **Tratamento de Exceções:** Lançamento e captura explícita de exceções específicas com mensagens claras e contextuais.
 - **Logging Estruturado Nativo:** Utilização exclusiva do módulo padrão `logging` do Python configurado para saídas organizadas em `stdout`/`stderr`.
 - **Portabilidade de Ambiente:** Proibição de inclusão de arquivos de configuração específicos de IDE (`.vscode/`, `.idea/`) no repositório de versão. A reprodutibilidade do ambiente deve ser garantida via `environment.yml` e `.gitignore`.
+- **Containerização Isolada:** A imagem Docker deve ser construída pelo
+  `Dockerfile`, utilizar a imagem base aprovada e executar a suíte automatizada
+  em ambiente isolado.
 
 ---
 
@@ -49,6 +52,8 @@ Fica terminantemente proibido para a Inteligência Artificial e para o desenvolv
 5. **Alteração da Assinatura de Funções Públicas:** Proibido renomear métodos públicos ou alterar a ordem e tipo dos parâmetros expostos no contrato analítico.
 6. **Comitação de Configurações Locais de Editor:** Proibida a inclusão da pasta `.vscode/` ou atalhos locais de sistema no controle de versão Git.
 7. **Geração de Código sem Cobertura de Testes:** Nenhuma nova função analítica deve ser entregue sem os respectivos testes unitários em `pytest`.
+8. **Containerização sem validação:** Alterações no `Dockerfile` devem ser
+   validadas pelo build da imagem e pela execução dos testes no container.
 
 ---
 
@@ -60,15 +65,20 @@ BootCampIII-TaskAnalyzer/
 │   └── workflows/
 │       └── ci.yml             # Pipeline CI/CD (GitHub Actions com setup-miniconda e Pytest)
 ├── .gitignore                 # Exclusão de .vscode/, __pycache__, .pytest_cache e ambientes locais
+├── .dockerignore              # Exclusões do contexto de build Docker
+├── Dockerfile                 # Imagem Docker com ambiente Conda isolado
 ├── README.md                  # Instruções de reprodução (Conda + Pytest)
-├── CONTEXT_RULES.md           # Regras de governança de IA e contexto (v3.2.0)
-├── environment.yml            # Definição de ambiente Conda (Python 3.11 + Pytest)
+├── CONTEXT_RULES.md           # Regras de governança de IA e contexto (v3.3.0)
+├── environment.yml            # Definição de ambiente Conda (Python 3.11, Pytest, build e Pylint)
+├── pyproject.toml             # Configuração de build, Pytest e Pylint
 ├── docs/
-│   └── evidence/              # Evidências visuais da execução dos testes
-│       ├── tests_harness.png
-│       ├── tests_integracao.png
-│       ├── tests_unitario_metricas.png
-│       └── tests_unitario_validacoes.png
+│   ├── evidence/              # Evidências visuais da execução dos testes
+│   │   ├── tests_harness.png
+│   │   ├── tests_integracao.png
+│   │   ├── tests_unitario_metricas.png
+│   │   └── tests_unitario_validacoes.png
+│   ├── governance_report.md   # Fonte do relatório de governança de IA
+│   └── governance_report.pdf  # Relatório de governança de IA
 ├── specs/
 │   ├── action_plan.md         # Plano de implementação e governança
 │   └── task_analyzer_spec.md  # Especificação Técnica SDD (v4.1.0)

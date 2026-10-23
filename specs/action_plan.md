@@ -234,6 +234,30 @@ pipeline aos critérios avaliativos da atividade.
 - A evidência de aprovação deve ser obtida pela execução local e pelo workflow
   do GitHub Actions; não serão adicionados prints artificiais ao repositório.
 
+### 8. Pipeline, Docker e governança de IA — em andamento
+
+**Objetivo:** revisar o pipeline existente, adicionar containerização isolada
+com Docker e consolidar a governança de IA em documentação versionada.
+
+**Decisões aprovadas antes da implementação:**
+
+- Branch: `feature/containerization-governance-pipeline`.
+- Imagem base: `continuumio/miniconda3`.
+- O CI deve construir a imagem e executar os testes dentro do container.
+- O relatório de governança deve ser versionado em PDF, com fonte Markdown.
+- A versão do pacote será atualizada de `0.7.0` para `0.8.0`.
+
+**Implementações realizadas:**
+
+- Criados `Dockerfile` e `.dockerignore`.
+- Configurado o Docker para criar o ambiente Conda e executar Pytest.
+- Adicionadas etapas Docker ao workflow de CI.
+- Criado o relatório-fonte `docs/governance_report.md`.
+- Criado e versionado o relatório PDF `docs/governance_report.pdf`.
+- Atualizadas as regras de governança para incluir Docker e validação isolada.
+- Atualizada a documentação de uso, estrutura e versionamento para `0.8.0`.
+- Nenhum arquivo foi removido.
+
 ## Critérios de conclusão
 
 O projeto será considerado concluído quando:
@@ -242,10 +266,12 @@ O projeto será considerado concluído quando:
 - As métricas definidas na especificação estiverem implementadas.
 - Os testes unitários e de integração estiverem aprovados.
 - O pipeline CI/CD executar sem falhas.
+- A imagem Docker puder ser construída e executar a suíte de testes.
 - Não houver persistência de dados em disco ou banco.
 - O código seguir as regras de tipagem, documentação, logging e estilo.
 - O README refletir o comportamento implementado.
 - A documentação de reprodução e os contratos refletirem o estado final.
+- A governança de IA estiver registrada em documentação versionada.
 
 ## Governança das decisões
 

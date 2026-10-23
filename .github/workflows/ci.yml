@@ -48,8 +48,14 @@ jobs:
 
       - name: Check package import
         shell: bash -el {0}
-        run: python -c "import task_analyzer; assert task_analyzer.__version__ == '0.7.0'"
+        run: python -c "import task_analyzer; assert task_analyzer.__version__ == '0.8.0'"
 
       - name: Run Pylint
         shell: bash -el {0}
         run: python -m pylint src tests --fail-under=8.0
+
+      - name: Build Docker image
+        run: docker build --tag task-analyzer:ci .
+
+      - name: Run tests in Docker
+        run: docker run --rm task-analyzer:ci
